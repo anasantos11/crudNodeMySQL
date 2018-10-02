@@ -66,3 +66,19 @@ app.post('/customer', function (req, res) {
   });
 });
 
+app.put('/customer', function (req, res) {
+  const id = req.body.id;
+  const lastName = req.body.lastName;
+  const firstName = req.body.firstName;
+  const favoriteWebsite = req.body.favoriteWebsite;
+
+  var query = "UPDATE customers SET last_name = '" + lastName + "', first_name = '" + firstName + "', favorite_website = '" + favoriteWebsite + "' WHERE customer_id = " + id;
+  database.query(query, function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      res.send("Erro:  " + error.message);
+    }
+    res.send("Dados do customer " + firstName + " " + lastName + " alterado com sucesso!");
+  });
+});
+
