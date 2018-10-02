@@ -37,3 +37,15 @@ app.get('/customers', function (req, res) {
     res.send(response);
   });
 });
+
+app.get('/customers/:id', function (req, res) {
+  const id = req.params.id;
+  database.query("SELECT * FROM customers WHERE customer_id =" + id, function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      res.error("Erro:  " + error.message);
+    }
+    res.send(response);
+  });
+});
+
