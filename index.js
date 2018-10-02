@@ -27,3 +27,13 @@ database.connect(function (error) {
 app.get('/', function (req, res) {
   res.send('Servidor local rodando na porta 3000!');
 });
+
+app.get('/customers', function (req, res) {
+  database.query("SELECT * FROM CUSTOMERS", function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      res.error("Erro:  " + error.message);
+    }
+    res.send(response);
+  });
+});
