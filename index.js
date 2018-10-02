@@ -49,7 +49,7 @@ app.get('/customers/:id', function (req, res) {
   });
 });
 
-app.post('/customer', function (req, res) {
+app.post('/customers', function (req, res) {
   const id = req.body.id;
   const lastName = req.body.lastName;
   const firstName = req.body.firstName;
@@ -66,7 +66,7 @@ app.post('/customer', function (req, res) {
   });
 });
 
-app.put('/customer', function (req, res) {
+app.put('/customers', function (req, res) {
   const id = req.body.id;
   const lastName = req.body.lastName;
   const firstName = req.body.firstName;
@@ -82,3 +82,14 @@ app.put('/customer', function (req, res) {
   });
 });
 
+
+app.delete('/customers/:id', function (req, res) {
+  const id = req.params.id;
+  database.query("DELETE FROM customers WHERE customer_id = " + id, function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      res.send("Erro:  " + error.message);
+    }
+    res.send("Customer com id " + id + " removido com sucesso!");
+  });
+});
