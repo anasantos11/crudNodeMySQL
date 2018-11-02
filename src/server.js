@@ -92,3 +92,80 @@ app.delete('/customers/:id', function (req, res) {
     res.send("Customer com id " + id + " removido com sucesso!");
   });
 });
+/**
+ * Api para fazer pesquisa de um determinado termo nas colunas de uma entidade do banco de dados. 
+ * A busca do termo na entidade é realizada conforme os dados recebidos na requisição. 
+ */
+app.get('/search', function (req, res) {
+  const entity = req.query.entity;
+
+  if (entity == undefined || entity == '')
+    return res.send('Erro: Não foi informado o nome da entidade que deseja pesquisar.');
+
+  if (!isValidEntityToSearch(entity.toLowerCase()))
+    return res.send('Erro: A entidade informada não é valida para fazer buscas. Escolha uma das entidades: categories, customers, departments, employees, products ou suppliers.');
+
+  const term = req.query.term;
+  if (term == undefined || term == '')
+    return res.send('Erro: Não foi informado o termo que deseja buscar na entidade ' + entity);
+
+  new sql.Request().query('SELECT * FROM ' + entity + ' WHERE ' + getPredictedSearch(entity.toLowerCase(), term), function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      return res.send("Erro:  " + error.message);
+    }
+    return response ? res.send(response.recordsets[0]) : res.send(response);
+  });
+});
+
+/**
+ * Método para verificar se a entidade é válida para fazer buscas
+ * @param {*} entity 
+ */
+function isValidEntityToSearch(entity) {
+  return entity === 'categories' || entity === 'customers' || entity === 'departments' || entity === 'employees' || entity === 'products' || entity === 'suppliers';
+}
+
+/**
+ * Método para montar o predicado de busca de acordo com a entidade e termo recebido
+ * @param {*} entity 
+ * @param {*} term 
+ */
+function getPredictedSearch(entity, term) {
+  /**
+   * Predicado para entidade Categories
+   */
+  if (entity === 'categories')
+    return "category_name like '%" + term + "%'";
+  /**
+   * Predicado para entidade Customers
+   */
+  if (entity === 'customers')
+    return "last_name like '%" + term + "%' " +
+      "OR first_name like '%" + term + "%' " +
+      "OR favorite_website like '%" + term + "%' ";
+  /**
+   * Predicado para entidade Departments
+   */
+  if (entity === 'departments')
+    return "dept_name like '%" + term + "%'";
+  /**
+   * Predicado para entidade Employees
+   */
+  if (entity === 'employees')
+    return "last_name like '%" + term + "%' " +
+      "OR first_name like '%" + term + "%' " +
+      "OR salary like '%" + term + "%' ";
+  /**
+     * Predicado para entidade Products
+     */
+  if (entity === 'products')
+    return "product_name like '%" + term + "%'";
+  /**
+ * Predicado para entidade Suppliers
+ */
+  if (entity === 'suppliers')
+    return "supplier_name like '%" + term + "%' " +
+      "OR city like '%" + term + "%' " +
+      "OR state like '%" + term + "%' ";
+}
