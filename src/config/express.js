@@ -7,9 +7,8 @@ module.exports = {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
 
-        const port = process.env.PORT || 3000;
-        app.listen(port, function () {
-            console.log('Server running at port:%d', port);
+        app.listen(process.env.PORT || 3000, function () {
+            console.log('Server running');
         });
         return app;
     }
