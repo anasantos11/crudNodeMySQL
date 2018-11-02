@@ -17,7 +17,7 @@ function getConfig(){
 
 module.exports = {
     sqlServer: function () {
-        const config = isLocal ? require('../data-sql.local') : getConfig();
+        const config = isLocal ? require('../../data-sql.local') : getConfig();
         sql.connect(config, function (err) {
             if (err) {
                 console.log('Erro: ' + err);
