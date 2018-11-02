@@ -169,3 +169,21 @@ function getPredictedSearch(entity, term) {
       "OR city like '%" + term + "%' " +
       "OR state like '%" + term + "%' ";
 }
+
+/**
+ * Api para retornar todos os pedidos de um determinado cliente do banco de dados 
+ * conforme parâmetro recebido na requisição.
+ */
+app.get('/customerOrders/:id', function (req, res) {
+  const customerId = req.params.id;
+  if (isNaN(parseInt(customerId)) )
+    return res.send('Erro: Não foi informado o identificador númerico do cliente que deseja consultar os pedidos.');
+
+  new sql.Request().query('SELECT * FROM orders WHERE customer_id = ' + customerId, function (error, response, fields) {
+    if (error) {
+      console.error("Erro:  " + error.message);
+      return res.send("Erro:  " + error.message);
+    }
+    return response ? res.send(response.recordsets[0]) : res.send(response);
+  });
+});
