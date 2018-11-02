@@ -1,9 +1,9 @@
-require('./config/data.global').sqlServer();
 const app = require('./config/express').express();
+require('./config/data.global').sqlServer();
 var sql = require("mssql");
 
 app.get('/', function (req, res) {
-  res.send('Servidor local rodando na porta 3000!');
+  res.send('Server running');
 });
 
 app.get('/customers', function (req, res) {
