@@ -1,6 +1,6 @@
-# crudNodeMySQL
+# Web Service RESTful em Node.js e Express.js
 
-Criado Web Service RESTful com NodeJS e Express JS a partir do banco de dados gerado pelo script ***data.sql*** disponibilizado neste repositório.
+Criado Web Service RESTful com Node.js e Express.js a partir do banco de dados gerado pelo script ***data.sql*** disponibilizado neste repositório.
 
 A API foi disponibilizada no Microsoft Azure e pode ser acessada através deste [link](https://service-apds.azurewebsites.net/).
 
@@ -9,7 +9,7 @@ O Web Service expõe os seguintes endpoints:
 | Método | Recurso                    | Descrição                                                                               |
 | ------ |--------------------------- | --------------------------------------------------------------------------------------- |
 | GET  	 | /customers 	              | Retorna os dados de todos os clientes cadastrados no banco de dados 	                  |
-| GET  	 | /customers/:idCustomer 	  | Retorna dados de um determinado cliente cadastrado no banco de dados                    |
+| GET  	 | /customers/:idCustomer 	| Retorna dados de um determinado cliente cadastrado no banco de dados                    |
 | POST   | /customers 	              | Insere um novo cliente no banco de dados 	                                              |
 | PUT  	 | /customers 	              | Atualiza dados de um cliente cadastrado no banco de dados 	                            |
 | DELELTE| /customers/:idCustomer 	  | Deleta o cliente cadastrado no banco de dados que possui o ID passado como parâmetro 	  |
