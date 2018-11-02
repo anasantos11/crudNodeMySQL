@@ -1,21 +1,19 @@
 {
   "name": "crud-node-mysql",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simple CRUD Node.js and MySQL sample for Azure App Service",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node server"
   },
-  "keywords": [],
-  "author": "APDS",
-  "license": "ISC, MIT",
+  "license": "Apache",
+  "engines": {
+    "node": "~0.10.0 || ~4.2.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mssql": "^4.2.2",
-    "mysql": "^2.16.0",
     "tedious": "^3.0.1"
-  },
-  "private": true
+  }
 }
