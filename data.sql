@@ -1,3 +1,4 @@
+// FONTE: https://www.techonthenet.com/sql/from_ddl.php
 CREATE TABLE categories
 ( category_id int NOT NULL,
   category_name char(50) NOT NULL,
@@ -49,8 +50,7 @@ CREATE TABLE suppliers
   CONSTRAINT suppliers_pk PRIMARY KEY (supplier_id)
 );
 
-
-
+// FONTE: https://www.techonthenet.com/sql/from_ddl.php
 
 INSERT INTO categories (category_id, category_name) VALUES (25, 'Deli');
 INSERT INTO categories (category_id, category_name) VALUES (50, 'Produce');
