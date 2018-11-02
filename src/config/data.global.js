@@ -1,6 +1,16 @@
+/**
+ * Import da dependência do microsoft sql server para fazer conexão ao banco de dados 
+ */
 var sql = require('mssql');
+/**
+ * Tenta recuperar a string de conexão das variáveis do ambiente para saber se está no ambiente local.
+ * Se conseguir recuperar significa que não está no ambiente local.
+ */
 const isLocal = !JSON.stringify(process.env.SQLAZURECONNSTR_ConnectionString);
-
+/**
+ * Método para recuperar a string de conexão das variáveis do ambiente e 
+ * retornar um objeto com os dados formatados
+ */
 function getConfig(){
     const connectionString = process.env.SQLAZURECONNSTR_ConnectionString.split(';');
     const config = {
@@ -15,6 +25,11 @@ function getConfig(){
    return config;
 };
 
+/**
+ * Realiza a conexão com o banco de dados após recuperar a string de conexão.
+ * Se estiver rodando no ambiente local irá recuperar de um arquivo.
+ * Se não estiver rodando no ambiente local chama o método getConfig para recuperar as informações. 
+ */
 module.exports = {
     sqlServer: function () {
         const config = isLocal ? require('../../data-sql.local') : getConfig();
