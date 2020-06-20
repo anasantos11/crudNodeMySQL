@@ -11,18 +11,26 @@ const isLocal = !JSON.stringify(process.env.SQLAZURECONNSTR_ConnectionString);
  * Método para recuperar a string de conexão das variáveis do ambiente e 
  * retornar um objeto com os dados formatados
  */
-function getConfig(){
-    const connectionString = process.env.SQLAZURECONNSTR_ConnectionString.split(';');
-    const config = {
-        server: connectionString[0].split('=')[1].split(':')[1].split(',')[0],
-        database: connectionString[1].split('=')[1],
-        user: connectionString[2].split('=')[1],
-        password: connectionString[3].split('=')[1],
-        options: {
-            encrypt: true
+function getConfig() {
+    if (isLocal) {
+        return {
+            server: '172.17.0.2',
+            database: 'webservice_nodejs',
+            user: 'root',
+            password: 'webservice-nodejs'
         }
-    };
-   return config;
+    } else {
+        const connectionString = process.env.SQLAZURECONNSTR_ConnectionString.split(';');
+        return {
+            server: connectionString[0].split('=')[1].split(':')[1].split(',')[0],
+            database: connectionString[1].split('=')[1],
+            user: connectionString[2].split('=')[1],
+            password: connectionString[3].split('=')[1],
+            options: {
+                encrypt: true
+            }
+        };
+    }
 };
 
 /**
@@ -32,7 +40,7 @@ function getConfig(){
  */
 module.exports = {
     sqlServer: function () {
-        const config = isLocal ? require('../../data-sql.local') : getConfig();
+        const config = getConfig();
         sql.connect(config, function (err) {
             if (err) {
                 console.log('Erro: ' + err);

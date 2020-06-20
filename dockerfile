@@ -1,0 +1,2 @@
+FROM mssql
+ENV MSSQL_SA_PASSWORD webservice-nodejs
